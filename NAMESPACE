@@ -2,6 +2,7 @@
 
 export("%>%")
 export(copy_pkg_files)
+export(create_plot)
 export(example_plan)
 importFrom(dplyr,mutate)
 importFrom(forcats,fct_inorder)
@@ -13,3 +14,4 @@ importFrom(magrittr,"%>%")
 importFrom(purrr,map)
 importFrom(purrr,walk)
 importFrom(readxl,read_excel)
+importFrom(rmarkdown,render)

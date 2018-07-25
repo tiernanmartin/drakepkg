@@ -15,11 +15,12 @@
 #' @importFrom readxl read_excel
 #' @importFrom forcats fct_inorder
 #' @importFrom dplyr mutate
+#' @importFrom rmarkdown render
 #' @export
 example_plan <- function(){
   drake_plan(
-    raw_data = read_excel(file_in("extdata/other-iris.xlsx")),
-    ready_data = mutate(raw_data, Species = fct_inorder(Species)),
+    raw_data = readxl::read_excel(file_in("extdata/other-iris.xlsx")),
+    ready_data = dplyr::mutate(raw_data, Species = forcats::fct_inorder(Species)),
     hist = create_plot(ready_data),
     fit = lm(Sepal.Width ~ Petal.Width + Species, ready_data),
     report = rmarkdown::render(
