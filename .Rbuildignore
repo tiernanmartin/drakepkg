@@ -2,3 +2,4 @@
 ^LICENSE\.md$
 ^drakepkg\.Rproj$
 ^\.Rproj\.user$
+^\.drake$
