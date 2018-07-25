@@ -10,3 +10,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
     testthat
+Imports: 
+    drake
