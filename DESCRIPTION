@@ -8,7 +8,10 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
-Depends: R (>=3.1.0), drake
+Depends: R (>= 3.1.0), drake
+Imports: 
+    magrittr,
+    dplyr
 Suggests: 
     testthat
 URL: https://github.com/tiernanmartin/drakepkg
