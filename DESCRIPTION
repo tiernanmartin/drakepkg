@@ -12,7 +12,10 @@ Depends: R (>= 3.1.0), drake
 Imports: 
     magrittr,
     dplyr,
-    ggplot2
+    ggplot2,
+    knitr,
+    rmarkdown,
+    purrr
 Suggests: 
     testthat,
     writexl
