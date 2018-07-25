@@ -6,3 +6,5 @@ Authors@R: person("Tiernan", "Martin", email = "tiernan.martin@gmail.com", role 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
