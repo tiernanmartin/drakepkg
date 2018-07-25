@@ -1,0 +1,17 @@
+---
+title: "Example R Markdown drake file target"
+author: Tiernan Martin
+output: html_document
+---
+
+_A description will be added here._
+
+```{r content}
+library(drake)
+library(drakepkg)
+loadd(fit)
+print(fit)
+readd(hist)
+```
+
+
