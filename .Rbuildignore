@@ -3,3 +3,4 @@
 ^drakepkg\.Rproj$
 ^\.Rproj\.user$
 ^\.drake$
+^inst/extdata/R
