@@ -1,4 +1,5 @@
 library(testthat)
 library(drakepkg)
 
-test_check("drakepkg")
+# tests will go here
+# test_check("drakepkg")
