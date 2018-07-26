@@ -24,7 +24,9 @@ An example of a drake plan that contains several targets
 and commands, including processing input and output files.
 }
 \examples{
-  drake::make(plan_example)
+  \dontrun{
+    drake::make(plan_example)
+   }
 }
 \keyword{drake,}
 \keyword{plan}

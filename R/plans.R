@@ -16,5 +16,7 @@
 #'
 #' @keywords drake, plan
 #' @examples
-#'   drake::make(plan_example)
+#'   \dontrun{
+#'     drake::make(plan_example)
+#'    }
 "plan_example"
