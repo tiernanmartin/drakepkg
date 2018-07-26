@@ -7,7 +7,8 @@ plan_example <- drake_plan(
     fit = lm(Sepal.Width ~ Petal.Width + Species, ready_data),
     report = rmarkdown::render(
       knitr_in("doc/report.Rmd"),
-      output_file = file_out("report.html"),
+      output_file = file_out("doc/report.html"),
+      output_dir = getwd(),
       quiet = TRUE
     ),
     strings_in_dots = "literals"
