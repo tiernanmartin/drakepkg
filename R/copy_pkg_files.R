@@ -12,7 +12,7 @@
 copy_pkg_files <- function(to = getwd(), overwrite = FALSE){
 
   dir_list <- map(
-    list("extdata", "doc"),
+    list("extdata", "doc", "plans"),
     system.file,
     package = "drakepkg",
     mustWork = TRUE)
