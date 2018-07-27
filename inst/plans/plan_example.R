@@ -8,7 +8,7 @@ plan_example <- drake_plan(
     report = rmarkdown::render(
       knitr_in("doc/report.Rmd"),
       output_file = file_out("doc/report.html"),
-      output_dir = getwd(),
+      output_dir = "doc",
       quiet = TRUE
     ),
     strings_in_dots = "literals"
