@@ -4,29 +4,40 @@
 \name{plan_example}
 \alias{plan_example}
 \title{An Example of a Drake Plan}
-\format{A \code{drake::\link[drake]{drake_plan}} object (\code{class=data.frame}) with the following targets:
+\format{A \code{\link[drake]{drake_plan}} object of class \code{tbl_df} with the following \code{\link[drake]{target}}s:
 \describe{
 
 \item{\code{raw_data}:}{\code{iris} data from an .xlsx file}
-\item{\code{ready_data}:}{ a prepared version of the \code{raw_data}}
-\item{\code{hist}:}{ a histogram plot created with \code{ggplot2}}
-\item{\code{fit}:}{ a linear model of the data (\code{Sepal.Width} as a function of \code{Petal.Width} and \code{Species})}
-\item{\code{report}}{a html report document}
+\item{\code{ready_data}:}{a prepared version of the \code{raw_data}}
+\item{\code{hist}:}{a histogram plot created with \code{ggplot2}}
+\item{\code{fit}:}{a linear model of the data (\code{Sepal.Width} as a function of \code{Petal.Width} and \code{Species})}
+\item{\code{report}:}{a html report document}
 
-These targets can be accessed using \code{drake::\link[drake]{loadd}}
-(e.g., \code{drake::loadd(fit)}).
 }}
 \usage{
 plan_example
 }
 \description{
-An example of a drake plan that contains several targets
+An example of a \code{\link[drake]{drake_plan}} that contains several targets
 and commands, including processing input and output files.
 }
 \examples{
-  \dontrun{
-    drake::make(plan_example)
-   }
+
+# Print the plan
+
+print(plan_example)
+
+
+# Make the plan, load a target, print the target
+
+\dontrun{
+
+make(plan_example)
+
+loadd(fit)
+
+print(fit)
+}
 }
 \keyword{drake,}
 \keyword{plan}
