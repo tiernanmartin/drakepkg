@@ -2,3 +2,6 @@
 .RData
 .Rproj.user
 .drake
+doc
+extdata
+plans
