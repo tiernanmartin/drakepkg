@@ -4,7 +4,7 @@ author: Tiernan Martin
 output: html_document
 ---
 
-_A description will be added here._
+Here is a preliminary model and exploratory visualization of the `iris` dataset:
 
 ```{r content}
 library(drake)
@@ -14,4 +14,6 @@ print(fit)
 readd(hist)
 ```
 
+<hr>
 
+_Note: this report is part of the `drakepkg` package and its purpose is to illustrate the viability of organizing a `drake` workflow within an R package._
