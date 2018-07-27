@@ -40,9 +40,9 @@ plan_example
 
 The plan is based on the [`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main) example included in the [`drake`](https://ropensci.github.io/drake/) package.
 
-One of the functions used in the plan — `create_plot()` — is made specifically for this example and its documentation can be accessed `help(create_plot)`.
+One of the functions used in the plan — `create_plot()` — is made specifically for this example and its documentation can be accessed using `help(create_plot)`.
 
-You can create `drakepkg`'s workflow using the following steps:
+You can create `drakepkg`'s workflow by performing the following steps:
 
 1.  Copy the workflow's directories and source code files into your working directory with the `copy_pkg_files()` function
 2.  Run `make(plan_example)`
