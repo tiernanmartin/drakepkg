@@ -8,7 +8,7 @@ drakepkg
 The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. The following table shows how this is implemented:
 
 | `drake`                   | Package                                             |
-|---------------------------|-----------------------------------------------------|
+|:--------------------------|:----------------------------------------------------|
 | plans                     | data                                                |
 | commands                  | functions                                           |
 | targets                   | *no package equivalent (stored in `.drake/` cache)* |
