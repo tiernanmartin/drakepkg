@@ -29,3 +29,52 @@ You can install the released version of `drakepkg` from its Github [repository](
 devtools::install_packages("tiernanmartin/drakepkg")
 ```
 
+## Usage
+
+The package comes with one plan (`plan_example`) which is saved as a data object.
+
+```{r}
+library(drakepkg)
+
+plan_example
+```
+
+The plan is based on the [`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main) example included in the [`drake`](https://ropensci.github.io/drake/) package. 
+
+One of the functions used in the plan — `create_plot()` — is made specifically for this example and its documentation can be accessed `help(create_plot)`.
+
+You can create `drakepkg`'s workflow using the following steps:
+
+  1. Copy the workflow's directories and source code files into your working directory with the `copy_pkg_files()` function
+  2. Run `make(plan_example)`
+  3. Access the `plan_example` targets using `drake` functions like `readd()` or `loadd()`
+
+
+```{r, eval = FALSE}
+
+# Step 1: copy the source code files into the working directory
+
+copy_pkg_files()
+
+
+# Step 2: make the example plan
+
+make(plan_example)
+
+
+# Step 3: examine the plan's targets
+
+readd(fit)
+
+loadd(hist)
+
+print(hist)
+
+```
+
+
+
+
+
+
+
