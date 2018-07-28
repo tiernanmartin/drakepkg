@@ -5,16 +5,18 @@
 drakepkg
 ========
 
-The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. The following table shows how this is implemented:
-
-| `drake`                   | Package                                             |
-|:--------------------------|:----------------------------------------------------|
-| plans                     | data                                                |
-| commands                  | functions                                           |
-| targets                   | *no package equivalent (stored in `.drake/` cache)* |
-| input files, output files | `extdata/*`                                         |
+The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package.
 
 This package is a work-in-progress that began with a request for guidance: [`drake` issue \#471](https://github.com/ropensci/drake/issues/471)
+
+The following table shows how each feature of a [`drake`](https://ropensci.github.io/drake/) workflow is made accessible within an R package:
+
+| `drake`                   | Package                                           |
+|:--------------------------|:--------------------------------------------------|
+| plans                     | data                                              |
+| commands                  | functions                                         |
+| targets                   | *no package equivalent (stored in .drake/ cache)* |
+| input files, output files | extdata/\*                                        |
 
 Installation
 ------------
