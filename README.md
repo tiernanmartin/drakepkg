@@ -67,13 +67,25 @@ copy_pkg_files()
 # Step 2: make the example plan
 
 make(plan_example)
+#> All targets are already up to date.
 
 
 # Step 3: examine the plan's targets
 
 readd(fit)
+#> 
+#> Call:
+#> lm(formula = Sepal.Width ~ Petal.Width + Species, data = ready_data)
+#> 
+#> Coefficients:
+#>       (Intercept)        Petal.Width  Speciesversicolor  
+#>             3.236              0.781             -1.501  
+#>  Speciesvirginica  
+#>            -1.844
 
 loadd(hist)
 
 print(hist)
 ```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />

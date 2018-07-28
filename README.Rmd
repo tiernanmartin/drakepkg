@@ -59,7 +59,7 @@ You can create `drakepkg`'s workflow by performing the following steps:
   3. Access the `plan_example` targets using `drake` functions like `readd()` or `loadd()`
 
 
-```{r, eval = FALSE}
+```{r}
 
 # Step 1: copy the source code files into the working directory
 
