@@ -20,6 +20,7 @@ plan_example
 \description{
 An example of a \code{\link[drake]{drake_plan}} that contains several targets
 and commands, including processing input and output files.
+@docType data
 }
 \examples{
 

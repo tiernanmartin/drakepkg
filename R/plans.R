@@ -1,6 +1,7 @@
 #' @title An Example of a Drake Plan
 #' @description An example of a \code{\link[drake]{drake_plan}} that contains several targets
 #'   and commands, including processing input and output files.
+#'  @docType data
 #' @format A \code{\link[drake]{drake_plan}} object of class \code{tbl_df} with the following \code{\link[drake]{target}}s:
 #'   \describe{
 #'
