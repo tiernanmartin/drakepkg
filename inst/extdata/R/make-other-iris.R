@@ -3,4 +3,6 @@ library(writexl)
 
 otheriris <- datasets::iris
 
-write_xlsx(otheriris, path = "inst/extdata/other-iris.xlsx")
+write_xlsx(otheriris, path = "extdata/other-iris.xlsx")
+
+usethis::use_data(otheriris)
