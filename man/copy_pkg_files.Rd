@@ -2,7 +2,7 @@
 % Please edit documentation in R/copy_pkg_files.R
 \name{copy_pkg_files}
 \alias{copy_pkg_files}
-\title{Save the Source Code Files of a Packaged Drake Workflow.}
+\title{Save the Source Code Files of a Packaged Drake Workflow}
 \usage{
 copy_pkg_files(to = getwd(), overwrite = FALSE)
 }
@@ -19,4 +19,9 @@ with the same name as the workflow folders.}
 \description{
 Copy the files of a packaged \code{drake} workflow into a
 supplied directory.
+}
+\note{
+This function will copy the following directories (and their subdirectories and files) into
+the user's working directory (or the directory supplied to the \code{to} parameter): \cr
+\code{. \cr ├── doc/ \cr ├── extdata/ \cr └── plans/ \cr}
 }
