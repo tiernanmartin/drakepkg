@@ -11,12 +11,12 @@ This package is a work-in-progress that began with a request for guidance: [`dra
 
 The following table shows how each feature of a [`drake`](https://ropensci.github.io/drake/) workflow is made accessible within an R package:
 
-| `drake`                   | Package                                                    |
-|:--------------------------|:-----------------------------------------------------------|
-| plans                     | data (`data/*.rda`)                                        |
-| commands                  | functions (`R/*.R`)                                        |
-| targets                   | *not directly accessible (stored in the cache: `.drake/`)* |
-| input files, output files | external data (`inst/extdata/*`)                           |
+| `drake`                   | Package                                                |
+|:--------------------------|:-------------------------------------------------------|
+| plans                     | data (`data/*.rda`)                                    |
+| commands                  | functions (`R/*.R`)                                    |
+| targets                   | data (`data/*.rda`) or stored in the cache (`.drake/`) |
+| input files, output files | external data (`inst/extdata/*`)                       |
 
 Installation
 ------------
@@ -67,7 +67,7 @@ copy_pkg_files()
 # Step 2: make the example plan
 
 make(plan_example)
-#> All targets are already up to date.
+#> target raw_data
 
 
 # Step 3: examine the plan's targets

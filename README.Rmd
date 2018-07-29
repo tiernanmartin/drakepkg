@@ -27,7 +27,7 @@ The following table shows how each feature of a [`drake`](https://ropensci.githu
 |:------------------------- |:---------------------------------------------------------- |
 | plans                     | data (`data/*.rda`)                                        |
 | commands                  | functions (`R/*.R`)                                        |
-| targets                   | _not directly accessible (stored in the cache: `.drake/`)_ |
+| targets                   | data (`data/*.rda`) or stored in the cache (`.drake/`)     |
 | input files, output files | external data (`inst/extdata/*`)                           |
 
 ## Installation
