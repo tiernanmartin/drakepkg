@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_plot.R
 \name{create_plot}
 \alias{create_plot}
-\title{Create Plot}
+\title{Create a Plot of Iris Data}
 \usage{
 create_plot(data)
 }

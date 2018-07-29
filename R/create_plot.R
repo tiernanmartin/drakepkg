@@ -1,4 +1,4 @@
-#' @title Create Plot
+#' @title Create a Plot of Iris Data
 #' @description Create a specific histogram for the \code{iris} data
 #' @param data the \code{iris} dataset
 #' @name create_plot
