@@ -4,7 +4,7 @@
 #' @param to Character scalar, file path, where
 #'   to write the folders containing the workflow's files.
 #' @param overwrite_doc Logical, whether to overwrite the `doc/` directory (default = `TRUE`)
-#' @param overwrite_extdata Logical, whether to overwrite the `extdata/` directory (default = `FALSE`)
+#' @param overwrite_extdata Logical, whether to overwrite the `extdata/` directory (default = `TRUE`)
 #' @param overwrite_plans Logical, whether to overwrite the `plans/` directory (default = `TRUE`)
 #' @note This function will copy the following directories (and their subdirectories and files) into
 #'   the user's working directory (or the directory supplied to the \code{to} parameter): \cr
@@ -21,7 +21,7 @@
 #' @export
 copy_pkg_files <- function(to = getwd(),
                            overwrite_doc = TRUE,
-                           overwrite_extdata = FALSE,
+                           overwrite_extdata = TRUE,
                            overwrite_plans = TRUE){
 
   dir_list <- map(
