@@ -1,5 +1,5 @@
 Package: drakepkg
-Version: 0.0.2
+Version: 0.0.3
 Title: Demonstrate A Drake Workflow Package
 Description: An example of a drake workflow organized as a package.
 Authors@R: person("Tiernan", "Martin", email = "tiernan.martin@gmail.com", role = c("aut", "cre"))
