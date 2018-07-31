@@ -3,8 +3,9 @@
 #'   supplied directory.
 #' @param to Character scalar, file path, where
 #'   to write the folders containing the workflow's files.
-#' @param overwrite Logical, whether to overwrite any existing folders
-#'   with the same name as the workflow folders.
+#' @param overwrite_doc Logical, whether to overwrite the `doc/` directory (default = `TRUE`)
+#' @param overwrite_extdata Logical, whether to overwrite the `extdata/` directory (default = `FALSE`)
+#' @param overwrite_plans Logical, whether to overwrite the `plans/` directory (default = `TRUE`)
 #' @note This function will copy the following directories (and their subdirectories and files) into
 #'   the user's working directory (or the directory supplied to the \code{to} parameter): \cr
 #'   `
@@ -16,9 +17,12 @@
 #'
 #' @return `NULL`
 #' @importFrom purrr map
-#' @importFrom purrr walk
+#' @importFrom purrr walk2
 #' @export
-copy_pkg_files <- function(to = getwd(), overwrite = FALSE){
+copy_pkg_files <- function(to = getwd(),
+                           overwrite_doc = TRUE,
+                           overwrite_extdata = FALSE,
+                           overwrite_plans = TRUE){
 
   dir_list <- map(
     list("doc", "extdata", "plans"),
@@ -26,11 +30,12 @@ copy_pkg_files <- function(to = getwd(), overwrite = FALSE){
     package = "drakepkg",
     mustWork = TRUE)
 
-  walk(dir_list,
-       file.copy,
-       to = to,
-       overwrite = overwrite,
-       recursive = TRUE)
+  overwrite_list <- list(overwrite_doc, overwrite_extdata, overwrite_plans)
+
+  walk2(dir_list,
+        overwrite_list,
+        ~ file.copy(.x, to = to, overwrite = .y, recursive = TRUE)
+        )
 
   invisible()
 

@@ -4,14 +4,18 @@
 \alias{copy_pkg_files}
 \title{Save the Source Code Files of a Packaged Drake Workflow}
 \usage{
-copy_pkg_files(to = getwd(), overwrite = FALSE)
+copy_pkg_files(to = getwd(), overwrite_doc = TRUE,
+  overwrite_extdata = FALSE, overwrite_plans = TRUE)
 }
 \arguments{
 \item{to}{Character scalar, file path, where
 to write the folders containing the workflow's files.}
 
-\item{overwrite}{Logical, whether to overwrite any existing folders
-with the same name as the workflow folders.}
+\item{overwrite_doc}{Logical, whether to overwrite the \code{doc/} directory (default = \code{TRUE})}
+
+\item{overwrite_extdata}{Logical, whether to overwrite the \code{extdata/} directory (default = \code{FALSE})}
+
+\item{overwrite_plans}{Logical, whether to overwrite the \code{plans/} directory (default = \code{TRUE})}
 }
 \value{
 \code{NULL}
