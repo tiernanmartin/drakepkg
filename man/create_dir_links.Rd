@@ -4,7 +4,7 @@
 \alias{create_dir_links}
 \title{Create the Links to the Inst/ Directory}
 \usage{
-create_dir_links(link_dir = "inst", targets = list(), ...)
+create_dir_links(link_dir = "inst", targets = list())
 }
 \arguments{
 \item{link_dir}{the path of the directory where the new links will be created (e.g., "inst")}

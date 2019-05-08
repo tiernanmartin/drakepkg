@@ -16,13 +16,27 @@
 #'
 #' @export
 create_dir_links <- function(link_dir = "inst",
-                           targets = list(), ...){
+                           targets = list()){
 
-  params <- list(...)
+  browser()
 
-  link_dirs <- purrr::map(targets, ~ file.path(link_dir,.x))
+  link_dirs <- purrr::map(targets, ~ paste(link_dir,.x, sep = "\\"))
 
-  purrr::walk2(link_dirs, targets, ~ R.utils::createLink(link = .x, target = .y, ... = params))
+  os_type <- Sys.info()['sysname']
+
+
+  if(os_type %in% "Windows"){
+
+    args <- purrr::map2(link_dirs,targets, ~ paste('/c mklink /J', .x, .y, collapse = " "))
+
+    purrr::walk(args, ~ system2("cmd.exe",args = .x))
+
+  }else{
+    purrr::walk2(link_dirs, targets, Sys.junction)
+  }
+
+
+
 
   invisible()
 
