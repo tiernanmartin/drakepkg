@@ -2,9 +2,12 @@
 % Please edit documentation in R/create_plot.R
 \name{create_plot}
 \alias{create_plot}
+\alias{create_facet_plot}
 \title{Create a Plot of Iris Data}
 \usage{
 create_plot(data)
+
+create_facet_plot(data)
 }
 \arguments{
 \item{data}{the \code{iris} dataset}

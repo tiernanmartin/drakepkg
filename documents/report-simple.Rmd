@@ -1,13 +1,11 @@
 ---
-title: "Example R Markdown drake file target"
-author: Tiernan Martin
+title: "Example R Markdown drake file target" 
 output: html_document
 ---
 
 Here is a preliminary model and exploratory visualization of the `iris` dataset:
 
 ```{r content}
-library(drake)
 library(drakepkg)
 loadd(fit)
 print(fit)
