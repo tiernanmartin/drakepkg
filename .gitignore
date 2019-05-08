@@ -2,7 +2,6 @@
 .RData
 .Rproj.user
 .drake
-doc
-extdata
-intdata
-documents
+/extdata/
+/intdata/
+/documents/
