@@ -1,75 +1,115 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
-drakepkg
-========
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
-The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package.
+# drakepkg
 
-This package is a work-in-progress that began with a request for guidance: [`drake` issue \#471](https://github.com/ropensci/drake/issues/471)
+The goal of `drakepkg` is to demonstrate how a
+[`drake`](https://ropensci.github.io/drake/) workflow can be organized
+as an R package.
 
-The following table shows how each feature of a [`drake`](https://ropensci.github.io/drake/) workflow is made accessible within an R package:
+This package is a work-in-progress that began with a request for
+guidance: [`drake` issue
+\#471](https://github.com/ropensci/drake/issues/471)
 
-| `drake`                   | Package                                                |
-|:--------------------------|:-------------------------------------------------------|
-| plans                     | data (`data/*.rda`)                                    |
-| commands                  | functions (`R/*.R`)                                    |
-| targets                   | data (`data/*.rda`) or stored in the cache (`.drake/`) |
-| input files, output files | external data (`inst/extdata/*`)                       |
+The following table shows how each feature of a
+[`drake`](https://ropensci.github.io/drake/) workflow is made accessible
+within an R
+package:
 
-Installation
-------------
+| `drake`                   | R Package                                                                                                     |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------ |
+| plans, commands           | functions (`R/*.R`)                                                                                           |
+| targets                   | stored in the cache (`.drake/`)                                                                               |
+| input files, output files | internal data (`inst/intdata/*`), external data (`inst/extdata/*`), images and documents (`inst/documents/*`) |
 
-You can install the released version of `drakepkg` from its Github [repository](https://github.com/tiernanmartin/drakepkg) with:
+## Installation
+
+You can install the released version of `drakepkg` from its Github
+[repository](https://github.com/tiernanmartin/drakepkg) with:
 
 ``` r
 devtools::install_packages("tiernanmartin/drakepkg")
 ```
 
-Usage
------
+## Usage
 
-The package comes with one plan (`plan_example`) which is saved as a data object.
+The package comes with two example
+[`drake`](https://ropensci.github.io/drake/) plans that are loosely
+based on the
+[`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main)
+example included in the [`drake`](https://ropensci.github.io/drake/)
+package.
+
+The first plan is a simple one:
 
 ``` r
 library(drakepkg)
 #> Loading required package: drake
+#> Warning: package 'drake' was built under R version 3.5.3
 
-plan_example
+get_example_plan_simple()
 #> # A tibble: 5 x 2
-#>   target     command                                                      
-#> * <chr>      <chr>                                                        
-#> 1 raw_data   "readxl::read_excel(file_in(\"extdata/other-iris.xlsx\"))"   
-#> 2 ready_data dplyr::mutate(raw_data, Species = forcats::fct_inorder(Speci~
-#> 3 hist       create_plot(ready_data)                                      
-#> 4 fit        lm(Sepal.Width ~ Petal.Width + Species, ready_data)          
-#> 5 report     "rmarkdown::render(knitr_in(\"doc/report.Rmd\"), output_file~
+#>   target     command                                                       
+#>   <chr>      <expr>                                                        
+#> 1 raw_data   readxl::read_excel(file_in("intdata/iris-internal.xlsx"))    ~
+#> 2 ready_data dplyr::mutate(raw_data, Species = forcats::fct_inorder(Specie~
+#> 3 hist       create_plot(ready_data)                                      ~
+#> 4 fit        lm(Sepal.Width ~ Petal.Width + Species, ready_data)          ~
+#> 5 report     write_report_simple(hist, fit)                               ~
 ```
 
-The plan is based on the [`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main) example included in the [`drake`](https://ropensci.github.io/drake/) package.
+Several commands used in the plan (e.g,`create_plot()`,
+`write_report_simple()`) are included as part of the `drakepkg` R
+package and so is the plan itself; the documentation for each of these
+functions can be accessed using R’s `help()` function (for example,
+`help(get_example_plan_simple)`).
 
-One of the functions used in the plan — `create_plot()` — is made specifically for this example and its documentation can be accessed using `help(create_plot)`.
+You can reproduce the simple plan’s workflow by performing the following
+steps:
 
-You can create `drakepkg`'s workflow by performing the following steps:
+1.  Copy the package’s directories and source code files into your
+    working directory with the `copy_drakepkg_files()` function
+2.  View the plan (`get_example_plan_simple()`) and then make it
+    (`make(get_example_plan_simple())`)
+3.  Access the plan’s targets using `drake` functions like `readd()` or
+    `loadd()`
+4.  View the html documents created by the workflow in the `documents/`
+    directory
 
-1.  Copy the workflow's directories and source code files into your working directory with the `copy_pkg_files()` function
-2.  Run `make(plan_example)`
-3.  Access the `plan_example` targets using `drake` functions like `readd()` or `loadd()`
+<!-- end list -->
 
 ``` r
-
 # Step 1: copy the source code files into the working directory
 
-copy_pkg_files()
+copy_drakepkg_files()
+```
 
+``` r
+# Step 2A: view the example plan
 
-# Step 2: make the example plan
+get_example_plan_simple()
+#> # A tibble: 5 x 2
+#>   target     command                                                       
+#>   <chr>      <expr>                                                        
+#> 1 raw_data   readxl::read_excel(file_in("intdata/iris-internal.xlsx"))    ~
+#> 2 ready_data dplyr::mutate(raw_data, Species = forcats::fct_inorder(Specie~
+#> 3 hist       create_plot(ready_data)                                      ~
+#> 4 fit        lm(Sepal.Width ~ Petal.Width + Species, ready_data)          ~
+#> 5 report     write_report_simple(hist, fit)                               ~
+```
 
-make(plan_example)
-#> target raw_data
+``` r
+# Step 2B: make the example plan
 
+make(get_example_plan_simple())
+#> All targets are already up to date.
+```
 
+``` r
 # Step 3: examine the plan's targets
 
 readd(fit)
@@ -83,9 +123,7 @@ readd(fit)
 #>  Speciesvirginica  
 #>            -1.844
 
-loadd(hist)
-
-print(hist)
+readd(hist)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-step4-1.png" width="100%" />
