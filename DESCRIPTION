@@ -1,5 +1,5 @@
 Package: drakepkg
-Version: 0.0.3
+Version: 0.0.4
 Title: Demonstrate A Drake Workflow Package
 Description: An example of a drake workflow organized as a package.
 Authors@R: person("Tiernan", "Martin", email = "tiernan.martin@gmail.com", role = c("aut", "cre"))
@@ -8,7 +8,9 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
-Depends: R (>= 3.1.0), drake
+Depends: 
+    R (>= 3.1.0), 
+    drake (>= 7.2.0)
 Imports:
     magrittr,
     dplyr,
@@ -17,7 +19,8 @@ Imports:
     rmarkdown,
     purrr,
     readxl,
-    forcats
+    forcats,
+    R.utils
 Suggests:
     testthat,
     writexl
