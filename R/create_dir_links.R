@@ -18,8 +18,6 @@
 create_dir_links <- function(link_dir = "inst",
                            targets = list()){
 
-  browser()
-
   link_dirs <- purrr::map(targets, ~ paste(link_dir,.x, sep = "\\"))
 
   os_type <- Sys.info()['sysname']
