@@ -5,3 +5,5 @@
 /extdata/
 /intdata/
 /documents/
+inst/extdata/*
+inst/documents/*
