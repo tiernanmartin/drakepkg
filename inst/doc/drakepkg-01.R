@@ -12,6 +12,10 @@
 
 get_example_plan_simple()
 
+## ----simple-step2-noeval, eval=FALSE-------------------------------------
+#  copy_drakepkg_files()
+#  
+
 ## ----simple-step3-noeval, eval=FALSE-------------------------------------
 #  
 #  make(get_example_plan_simple())

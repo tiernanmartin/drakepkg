@@ -14,7 +14,7 @@
 
 <meta name="date" content="2019-05-12" />
 
-<title>How to use this packaged drake workflow</title>
+<title>1. How to use a packaged drake workflow</title>
 
 
 
@@ -298,28 +298,23 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">How to use this packaged <code>drake</code> workflow</h1>
+<h1 class="title toc-ignore">1. How to use a packaged <code>drake</code> workflow</h1>
 <h4 class="author"><em>Tiernan Martin</em></h4>
 <h4 class="date"><em>2019-05-12</em></h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#reproducing-a-workflow-from-an-r-package"><span class="toc-section-number">1</span> Reproducing a Workflow from an R Package</a><ul>
-<li><a href="#simple-plan"><span class="toc-section-number">1.1</span> Simple Plan</a></li>
-<li><a href="#plan-with-external-data"><span class="toc-section-number">1.2</span> Plan With External Data</a></li>
-<li><a href="#plan-with-open-science-framework-compendium"><span class="toc-section-number">1.3</span> Plan With Open Science Framework Compendium</a></li>
-</ul></li>
-<li><a href="#creating-a-drake-workflow-r-package"><span class="toc-section-number">2</span> Creating a Drake Workflow R Package</a></li>
+<li><a href="#simple-plan"><span class="toc-section-number">1</span> Simple Plan</a></li>
+<li><a href="#plan-with-external-data"><span class="toc-section-number">2</span> Plan With External Data</a></li>
+<li><a href="#plan-with-open-science-framework-compendium"><span class="toc-section-number">3</span> Plan With Open Science Framework Compendium</a></li>
 </ul>
 </div>
 
 <p>The goal of <code>drakepkg</code> is to demonstrate how a <a href="https://ropensci.github.io/drake/"><code>drake</code></a> workflow can be organized as an R package. Users who are not yet familiar with <a href="https://ropensci.github.io/drake/"><code>drake</code></a> should review the package’s <a href="https://ropenscilabs.github.io/drake-manual/">User Manual</a> before continuing with this vignette.</p>
-<div id="reproducing-a-workflow-from-an-r-package" class="section level1">
-<h1><span class="header-section-number">1</span> Reproducing a Workflow from an R Package</h1>
 <p>The following examples illustrate the way that <a href="https://ropensci.github.io/drake/"><code>drake</code></a> workflow’s can be reproduced when they’re included in an R package.</p>
-<div id="simple-plan" class="section level2">
-<h2><span class="header-section-number">1.1</span> Simple Plan</h2>
+<div id="simple-plan" class="section level1">
+<h1><span class="header-section-number">1</span> Simple Plan</h1>
 <p>This example borrows the <code>main</code> example from the <a href="https://ropensci.github.io/drake/"><code>drake</code></a> package documentation and recreates it within an R package.</p>
 <p>The plan is included in <code>drakepkg</code> as a function:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">  <span class="kw">library</span>(drakepkg) <span class="co"># devtools::install_packages(&quot;tiernanmartin/drakepkg&quot;)</span></a>
@@ -343,6 +338,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </ol>
 <p>The first step is optional but strongly recommended; it is generally accepted as a best practice that data analysis projects should be <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/#self-contained-projects">self-contained</a>.</p>
 <p>The second step is an important one. Most <a href="https://ropensci.github.io/drake/"><code>drake</code></a> plans interact with the user’s file system at some point, typically to read inputs or write outputs. <code>drakepkg</code>’s <code>inst/</code> directory contains the files and directories that are needed to successfully make <code>get_example_plan_simple()</code>. The <code>copy_drakepkg_files()</code> function copies the following directories from <code>drakepkg</code> into the user’s working directory:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">copy_drakepkg_files</span>()</a></code></pre></div>
 <pre><code>.
 ├── documents
 ├── extdata
@@ -351,23 +347,21 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 │   └── make-iris-internal.R
 └── iris-internal.xlsx </code></pre>
 <p>The third step is to make the plan:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">make</span>(<span class="kw">get_example_plan_simple</span>())</a></code></pre></div>
-<pre><code>#&gt; Unloading targets from environment:
-#&gt;   fit
-#&gt; target raw_data
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">make</span>(<span class="kw">get_example_plan_simple</span>())</a></code></pre></div>
+<pre><code>#&gt; target raw_data
 #&gt; target ready_data
 #&gt; target fit
 #&gt; target hist
 #&gt; target report</code></pre>
 <p>The final output of the plan above is the <code>report</code> target, but any of the targets can be accessed using <a href="https://ropensci.github.io/drake/"><code>drake</code></a> functions like <code>readd()</code> or <code>loadd()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="co"># retrieve a target from the drake cache and inspect it</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw">loadd</span>(fit)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="kw">summary</span>(fit) </a>
-<a class="sourceLine" id="cb5-5" title="5"></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co"># inspect a target without storing it in the local environment</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="kw">readd</span>(hist) </a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># retrieve a target from the drake cache and inspect it</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw">loadd</span>(fit)</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">summary</span>(fit) </a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co"># inspect a target without storing it in the local environment</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="kw">readd</span>(hist) </a></code></pre></div>
 <pre><code>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = Sepal.Width ~ Petal.Width + Species, data = ready_data)
@@ -390,15 +384,13 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 #&gt; F-statistic: 55.65 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABpFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrYAujgzMzM6AAA6AGY6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kLY6kNtNTU1NTVlNTWBNTWRNTW5NTXlNTYNNTY5NY2RNbm5Nbo5NbqtNjsheTU1hnP9kTU1kjshmAABmOgBmOjpmZgBmZjpmZmZmZpBmkJBmkLZmkNtmtrZmtttmtv9uTU1ubm5ubo5ujqtujshuq8huq+RvTU1/U02Hjm6OTU2Obk2Oq8iOyOSOyP+QOgCQZjqQZmaQkLaQtpCQtraQttuQ27aQ29uQ2/+i//+rbk2ryOSr5P+1jlm15P+1//+2ZgC2Zjq2ZpC2kDq2kGa2kJC2tpC2tra2ttu229u22/+2/7a2///Ijk3Ijm7Iq27Iq47I5P/I///bkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b/9vb///knWnkq2Tkq27kyI7kyKvk5J3k5OTk5P/k/+Tk///r6+v4dm3/tmb/yI7/25D/27b/29v/5J3/5Kv/5Mj/5OT//7X//7b//8j//83//9v//+T///8uPzaWAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAPR0lEQVR4nO2djX8URxnH9yA1cSVAzKr4UqToBUmlQqrVailNaIsgvm0sgmCh0m3SBkRJrVK2dxjt1cv+0877zuzt7nO7e5Pb3Xt+n5ZkL3Obm2+eeeaZeWZ2nAiVK2faH6DuQkCAEBAgBAQIAQFCQIAQECAEBAgBAUJAgBAQIAQEyAqgT9l/7P/GCwEBQkCAEBAgBAQIAQFCQIAQECAEBMgGoKcIKF8ICBACAoSAACEgQE8t3HNqQgsChIAAISBACAgQAgKEgAAhIEAICBACAoSAACEgQAgIEAIChIAAISBACAgQAgJUGND+X9Y878f3+cXHFz3v5K+TRWYa0P51j+kNevGYf/+zRJmZBvSZd/J+tP+e9+33o2hvzbsURbveid+YZWYZ0P51TuMu/fKY287jpAnNMiAhxknC2lv77hPjpwho/553ilKi7SyKvniNf42+zDXzaR/ieryfPqFguOVIUAhIaO/llz3vJ09GAUlhE4v275I2hoByRP3OiA+SQkDcarAXS5G0FgYF46AU3aWRdPTxGoWCkXSK5FjsFG1VOBZLERvNP3+JX+BovpQQEKBygIY3Fh3H6Ry/XfwX9lznQvF3jafaANpyHaHnHhX9hbMAKCRgqO08u+GWIGRRNQE0XHfmxbfEHJYtfKiyqgmgntu5Jr/3a2VCNQQUOofejaJB17kw3CBee0nS2jlDHNTRK7LY1hHyw3OP+LuFDzKLsKvD56rRrg0gZ96sCAH0oy5z2gLdpuHDSZuMryQgs0ggriju8qoJINKuEn/rAaXz1Ue0d2M1DNjV8AOXOyuf/9Bh/koAMouQF6nxbbvKu5VSXQANVpixHHtbQqKAmFlwp03+Pc9eD5lFSU8eMHocUKJIoAypkgnVBVA03BSBUOc8qxcBJHw1c9qB8tw+tQhZa4XmQpRVpKJqA4ho5/IRhmiOVowAEr09rSlxObLvZxx8o90wQMkiIW20D6vUg6lOgKg+3BBOlvZi/CXaYgZdJxbjNQIoUYS5qZJDF111A0Tams+cDwRIDybTAbFAgLXZKpWpB6C4PamLEUA6kQwLGonAh3+koVClgVo9ABkV5uYx4oOMzlr6IP669EGp/flWtcFdTTbUBU4cSfM+iQAS9WUwfLNPkl0Ux8jfYRaJeVXrzuphQbSic3f4t0NfDjU4s9ARPXnCZtLiIL2I4lJtbAcDGj4oes+S0x0d2ikPt1e4z6A+l7pX2UKI6z5OEO6scG6+/KEWSZtFKPPbNL6avA8adDWb7LmFDbTihBnvdUj9Fl198CUHWh1W3bSxWKJIKO+4VPDzGwIBGRfjqeSU6/YZWqNFMSKj3qVP+qDD52X72GaD8yUZ+9FO/DDvwdVo3izS33CrB0JJQDdWV1fPup1jq1JHirs4Bmih4qR9Wq89DSUB9ZSlKxX+nK0GFG0uLlLbXZQ6WnzCqd2AolJux1DrAQ0vv1hpmrL1gKpqIoDqomxAD6QKz6nMAKD+RnLqoIjaD8js6xHQiOig5u1bUn8q6rFbD6hqBzIDgGoQB9VFCAhQhg+qtNym/YB6bvYc3H/vjbdGsdWAnm05nePpvdh/XhOrXOlF3irXNgMyMkyJOOiu98o/o2h3je7JzF0nXQzQ0zSVqc/EVRCQ3MDymJpQ7kr7NgOKnj3QlTYW21s7Bew4bDUgWNRq8nccLhS6X9sA7a0RJvk7DlsNCGpie8xH52+oO7gm1n9z/N9TXEV7Mapd1nvVBVDPrbTEDlJxQPv3vBPsuQv5Ow7bDGj4oQoSN9xDV80mtn+d7RiLorr0YlMApCs5cCV8XpE4DjoO0lZGRzSFz/KqgUzdaZlWrWB/g66iOnpn/I+SENiLheaqG53GAUfSgZaND1TWXQDSc/VaQTk3Gi+uKSoQ0KCrD1y/EEMxz6PNanJjsTEADbq0lv11+m/IFm70V/iqF/oXDJzOFbYoetko6NOV01G/wgzgGID0NvaZpwOa3Gh+PEBqG4LPLWLQnReAhuv8FToPoRcUCiwCCoovP7LUxOiqVb6wV7Yn1owYIGnnw3Xy54wL0ld2bl0+U2KBgRTQi93ccIqv5KeAFiYPSCz/mXtXi0MIjgQgYklxwWgo81cTBWTGQcWnXy0BisRS83luJ1KjFhQXpAvRVt+89XDCTcwAdLx4D2kPEFGvyxbax3PCIz5IKyi4JZZVFxIwFit1TzuAei5b5rnFtxnQdXrDd/h6zi89MnoxrSD316S3s+ikS8iSBflaSLMZN38a6phxkFbQlw2hdLRtD9BpK5G0bPIsWOabEcX+sEQkzQuyPUSHz32Uk4UAlAXoGd3F3ln8YZkY3RagqSgdkFpQ6zhLxdGXAFRfpQOiTZcudD1TqvW2H1DINn9SkY6ieJa1BKCFNBX9vVaUkXqeT/1+TLUeEB8OC5XcitByQNW3IrQcEFqQUht9UJg9sDCGuWPJSi8WcUAF1DBALA46epBx0EE1sUkBOvBIummA2FjMJWOxUo8usANITnrxBqTSPlFw6M8rzqE7Wq6Hl6Dj1M5L/L1qICsAxQNb+e5M1WQ0PwYgORfm8yeXyLQPqeIP6CyHluthgMT8B0MVT4UwQEaKiL87+5M1B5CYRmSc9LRPILbw6kmhZfry3B3x3CZtMo0B0q6N/eipygdUZUZx4oB4CjNgW+S1tA9venquJ2QkWJEg/pahpYCM6VlwtjoDUH/jK3zveokpaVuARPPQ2ojDH5zD4hAt1xOy7KFqN/qEPv3fmOAPoCgmHVDgyM39ZR4NYqsXC9iE83xkpn1EFbVcTyagzjUTELGkcoBC2R88k9v8C8kWINomWIWMzjquosz1WLcg+mgH5ddLPNjBWhzkd37ZFY9hiKtlVJElhTQfRA0O8EElANV2NB86i9yn6mmfQHRuelJI9mL9ddHP5fRibQJETNt8ZiD9aJqTFrkePQ6iBpcbB5VsYvG7who1MW0lRZz2kVWMcz1aJC0GSjmRdCknzW2QabvEk1VrPBYrrlRA1AbZ4zvOumWeXtz+rIYWiZV5ONEMACKh9GX69J7FF8s8W6YEoNNpKvGrJ69Sg9XHcmF09hK8mQa06wlAOYs4CaDTMwpo/z3Pk8ezZC8Dnl1Aexe9kxc5oLyF5LML6O6J1//FN2nkbkWwCygjb5F8OSe9MbYKA/rkidzFkruhjgIqcNcWAYoUmbwNdQt2AR2gJglIijSxhdn1QdG0AOlpHz6hITI2/RWn8xKbaWQv+52rG44zdyVKyf+U2PtTAVDehjoLgPS0jwDEMjZ8Q8+xGFD6vId4pGm8UHZMVQKU3YvZaGJG2kdlbEj9l9jxCDGgzhXxvNtk/qfM3p8KgLLjoKdWAGlpH1FzbhViA1kMaFkWTuR/pAptTKgCKDOStgMoTvtIQNSiRFeu+6Br+rW536343p8qgDLHYnYAxWmfsoDK7P2pBChrNG8JkEr7lAVUZu+Pldy8JUBx2kcDNOqDTEBa/qfU3p9GAdLSPgqQ6MXcLEBa/qfU3p9GAVJpHw2QCm6yAGn5nzJ7fxoFSKV9dEDMJOZuZvkgPf9TZu9PswBlaxID91TVBFB59Vy6gI6vpbKhxgOSGSpbD/BoPCDhWCodcJSn5gOyLAQECAEBsgmoHnOmFYWAACEgQAgIEAICZAHQUwSULwQECAEBQkCAEBAgDqjojFddhYAAISBACAgQAgKEgAAhIEAICBACAoSAACEgQAgIEAIChIAAVQOUukYRASmlr3JFQFIZ66QRkFTGSnsEJJS1VwMBCWXtOERAQpk7DlulSQJS+pSfiDDr64MQEKDMHYcIiCtzxyECEsracYiAhLJ2HCIgqYwdhwhIKX3HIQLKFwkVabTYkogRAQFCQIAQECAEBAgBAbKxkLxVQkCAEBAgBAQIAQFCQIAQECAEBGjigPgMyN++9j3Pe/7SpG8+BU0akJhDEzo14btPQRMGxGZh93/red/8XRTtrnlvTPb2U9CEAdEJ/D3SyLxvvc+umm9CkwXEMkF3T7z+jxdO/D6i9oSATLFc4idPos9f/cavorSEUPM0WUAyG/2/n1NAe2vJlGsDZRHQXht8tEVAuyyt2HhZ8EFEn7/69V94J1pgP1Z6MaJ/v0DC6fsTvfW0ZCEOIvq7533/CVS2GbIRSUe7IlBsg+yOxbzkyqHmycpo/jsIaHaEgAAhIEAICBACAoSAACEgQAgIEAIChIAAISBACAjQKKBBVx7Pcfh4+lFuwz+knEDfc7VzCfSLkB8Lz99Jj/0yStKf88NE+F0TP5y+8gBlHKO05R6CAJF7qFMK6HEoF/RC6YDEXZsBSGDpr6cedhc4ICBCRR5+wnhLWmlvFYDEjxoFyDCEWOMAChVa8t1byuT8lNPZmwwoncU4gOIrwuSv64LWIO10wUYDkoawc4aevnmFv8REa/HsxiI9cpK7crNm/BBGeTdfnQBKbydLDm8ccZy5O+xFdVf6w/6Guuv0NRagTeGyafuIAYWudOX8IDTjT++rc5xY9fkFP9xJlBys8DevJgGt8vummekUNE4TCxx6/ObwA5dbhWgMpNxz5K883HLZ9UjfxCvo06+DLrsQZiVK+k7nfBRtu06yiTlzV6PhO/ZO6ymmMZw0+cz85BzTWyhXFBgNJ37rBXWH4bpuZPxL6Kjz0xKANLI1UB6g7RX22QPV9fjipFPzo4dpgMRBggIDO4FQWhUvqTo0PwlI+qsaA1LqXDDOTOSodEDDnZtnnTRAoqwvq02/cL68pPLiWb1YWOjAYXvKA7R47mGUiKy5SxKAts9IjimAQu58OIZBlxQRrY6XjO20iYCWE9fpgNiRip1jV7ZSATEm0tGwjl5WOQGIH8PcbEBmdKectHP8Nr1O9UGcifK09Ohl6cvaBij2FkK8KvHLqb0Yc8zxUKXnknha3LcFPsi0mGSHy6uiionDT0cAESYfqdeG62REJmrMSwaZvVjjAPVEgCj/6gkLCtOdNHVCZ2O0gbMoifCSsj8fjYMaB4h6Yzoy2uFhkfzoPo+vN8VYY3SU6etnV4bxhYqk6ftVJC3u2khAQzkW68RnBy+r3m3uLWYLomZhPDsWajNlrLS4ECXF+Z+dVUXGYcelNxCQiHgOLz3kV2T0xQ5R5gcDP+KNbRSQGjUwxZ5MMdiKR/Pqrg0AhDKEgAAhIEAICBACAoSAACEgQAgIEAIChIAAISBACAgQAgKEgAAhIEAICBACAoSAAP0fboR/80VYMugAAAAASUVORK5CYII=" width="66%" /></p>
 </div>
-<div id="plan-with-external-data" class="section level2">
-<h2><span class="header-section-number">1.2</span> Plan With External Data</h2>
+<div id="plan-with-external-data" class="section level1">
+<h1><span class="header-section-number">2</span> Plan With External Data</h1>
+<p><em>(work in progress)</em></p>
 </div>
-<div id="plan-with-open-science-framework-compendium" class="section level2">
-<h2><span class="header-section-number">1.3</span> Plan With Open Science Framework Compendium</h2>
-</div>
-</div>
-<div id="creating-a-drake-workflow-r-package" class="section level1">
-<h1><span class="header-section-number">2</span> Creating a Drake Workflow R Package</h1>
+<div id="plan-with-open-science-framework-compendium" class="section level1">
+<h1><span class="header-section-number">3</span> Plan With Open Science Framework Compendium</h1>
+<p><em>(work in progress)</em></p>
 </div>
 
 

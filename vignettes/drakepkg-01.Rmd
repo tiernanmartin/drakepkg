@@ -1,5 +1,5 @@
 ---
-title: "How to use this packaged `drake` workflow"
+title: "1. How to use a packaged `drake` workflow"
 author: "Tiernan Martin"
 date: "`r Sys.Date()`"
 output:
@@ -7,7 +7,7 @@ output:
     toc: true
     number_sections: true
 vignette: >
-  %\VignetteIndexEntry{drakepkg}
+  %\VignetteIndexEntry{1. How to use a packaged `drake` workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,12 +24,9 @@ vignette: >
   
 The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. Users who are not yet familiar with [`drake`](https://ropensci.github.io/drake/) should review the package's [User Manual](https://ropenscilabs.github.io/drake-manual/) before continuing with this vignette.
   
+The following examples illustrate the way that [`drake`](https://ropensci.github.io/drake/) workflow's can be reproduced when they're included in an R package.
   
-# Reproducing a Workflow from an R Package
-  
-  The following examples illustrate the way that [`drake`](https://ropensci.github.io/drake/) workflow's can be reproduced when they're included in an R package.
-  
-## Simple Plan
+# Simple Plan
   
 This example borrows the `main` example from the [`drake`](https://ropensci.github.io/drake/) package documentation and recreates it within an R package.
   
@@ -52,6 +49,13 @@ Here are the steps needed to reproduce this plan:
 The first step is optional but strongly recommended; it is generally accepted as a best practice that data analysis projects should be [self-contained](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/#self-contained-projects).  
 
 The second step is an important one. Most [`drake`](https://ropensci.github.io/drake/) plans interact with the user's file system at some point, typically to read inputs or write outputs. `drakepkg`'s `inst/` directory contains the files and directories that are needed to successfully make `get_example_plan_simple()`. The `copy_drakepkg_files()` function copies the following directories from `drakepkg` into the user's working directory:
+
+```{r simple-step2-noeval, eval=FALSE}
+copy_drakepkg_files()
+
+```
+
+
 
 ```
 .
@@ -147,9 +151,9 @@ setwd(old_wd)
 
 
 
-## Plan With External Data
+# Plan With External Data
 
+_(work in progress)_
 
-## Plan With Open Science Framework Compendium
-
-# Creating a Drake Workflow R Package
+# Plan With Open Science Framework Compendium
+_(work in progress)_
