@@ -1,0 +1,27 @@
+---
+title: "2. How to create a `drake` workflow R package"
+author: "Tiernan Martin"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{2. How to create a `drake` workflow R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+  knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.path = "man/figures/vignette-",
+  comment = "#>"
+  )
+  options(drake_make_menu = FALSE,
+  drake_clean_menu = FALSE)
+```
+  
+# Creating a Drake Workflow R Package
+
+_(work in progress)_
