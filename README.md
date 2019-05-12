@@ -7,13 +7,37 @@ public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus
 
 # drakepkg
 
-The goal of `drakepkg` is to demonstrate how a
-[`drake`](https://ropensci.github.io/drake/) workflow can be organized
-as an R package.
+The goal of [`drakepkg`](https://github.com/tiernanmartin/drakepkg) is
+to demonstrate how a [`drake`](https://ropensci.github.io/drake/)
+workflow can be organized as an R package.
 
-This package is a work-in-progress that began with a request for
-guidance: [`drake` issue
-\#471](https://github.com/ropensci/drake/issues/471)
+Why do this? Because the package system in R provides a widely-adopted
+method of structuring, documenting, testing, and sharing R code. While
+most R packages are general purpose, this approach applies the same
+framework to a specific workflow (or set of workflows). It increases the
+reproducibility of a complex workflow without requiring users to
+recreate the workflow’s environment with a container image (although
+that approach is compatible with
+[`drakepkg`](https://github.com/tiernanmartin/drakepkg) - see
+[januz/drakepkg](https://github.com/januz/drakepkg)).
+
+The [`drakepkg`](https://github.com/tiernanmartin/drakepkg) package is
+experimental in nature and currently requires some inconvenient steps
+(see the [drake manual - 7.1.4 Workflows as R
+packages](https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages));
+please use caution when applying this approach to your own work.
+
+## Installation
+
+You can install the released version of
+[`drakepkg`](https://github.com/tiernanmartin/drakepkg) from its Github
+[repository](https://github.com/tiernanmartin/drakepkg) with:
+
+``` r
+devtools::install_packages("tiernanmartin/drakepkg")
+```
+
+## Usage
 
 The following table shows how each feature of a
 [`drake`](https://ropensci.github.io/drake/) workflow is made accessible
@@ -26,31 +50,18 @@ package:
 | targets                   | stored in the cache (`.drake/`)                                                                               |
 | input files, output files | internal data (`inst/intdata/*`), external data (`inst/extdata/*`), images and documents (`inst/documents/*`) |
 
-## Installation
-
-You can install the released version of `drakepkg` from its Github
-[repository](https://github.com/tiernanmartin/drakepkg) with:
-
-``` r
-devtools::install_packages("tiernanmartin/drakepkg")
-```
-
-## Usage
-
 The package comes with two example
-[`drake`](https://ropensci.github.io/drake/) plans that are loosely
-based on the
-[`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main)
-example included in the [`drake`](https://ropensci.github.io/drake/)
-package.
+[`drake`](https://ropensci.github.io/drake/) plans, both of which are
+loosely based on the `main` example included in the
+[`drake`](https://ropensci.github.io/drake/) package:
 
-The first plan is a simple one:
+1.  An introductory plan: `drakepkg::get_example_plan_simple()`
+2.  A plan that involves downloading external data:
+    `drakepkg::get_example_plan_external()`
+
+The first plan looks like this:
 
 ``` r
-library(drakepkg)
-#> Loading required package: drake
-#> Warning: package 'drake' was built under R version 3.5.3
-
 get_example_plan_simple()
 #> # A tibble: 5 x 2
 #>   target     command                                                       
@@ -59,16 +70,19 @@ get_example_plan_simple()
 #> 2 ready_data dplyr::mutate(raw_data, Species = forcats::fct_inorder(Specie~
 #> 3 hist       create_plot(ready_data)                                      ~
 #> 4 fit        lm(Sepal.Width ~ Petal.Width + Species, ready_data)          ~
-#> 5 report     write_report_simple(hist, fit)                               ~
+#> 5 report     write_html_report(hist, fit, knitr_in("documents/report-simpl~
 ```
 
 Several commands used in the plan (e.g,`create_plot()`,
-`write_report_simple()`) are included as part of the `drakepkg` R
-package and so is the plan itself; the documentation for each of these
-functions can be accessed using R’s `help()` function (for example,
+`write_report_simple()`) are included as part of the
+[`drakepkg`](https://github.com/tiernanmartin/drakepkg) R package and so
+is the plan itself; the documentation for each of these functions can be
+accessed using R’s `help()` function (for example,
 `help(get_example_plan_simple)`).
 
-You can reproduce the simple plan’s workflow by performing the following
+Once you have installed and loaded
+[`drakepkg`](https://github.com/tiernanmartin/drakepkg), you can
+reproduce the introductory plan’s workflow by performing the following
 steps:
 
 1.  Copy the package’s directories and source code files into your
@@ -99,14 +113,18 @@ get_example_plan_simple()
 #> 2 ready_data dplyr::mutate(raw_data, Species = forcats::fct_inorder(Specie~
 #> 3 hist       create_plot(ready_data)                                      ~
 #> 4 fit        lm(Sepal.Width ~ Petal.Width + Species, ready_data)          ~
-#> 5 report     write_report_simple(hist, fit)                               ~
+#> 5 report     write_html_report(hist, fit, knitr_in("documents/report-simpl~
 ```
 
 ``` r
 # Step 2B: make the example plan
 
 make(get_example_plan_simple())
-#> All targets are already up to date.
+#> target raw_data
+#> target ready_data
+#> target fit
+#> target hist
+#> target report
 ```
 
 ``` r
@@ -126,4 +144,7 @@ readd(fit)
 readd(hist)
 ```
 
-<img src="man/figures/README-step4-1.png" width="100%" />
+<img src="man/figures/README-step3-1.png" width="100%" />
+
+This example and others are available in the package vignette
+(`vignette('drakepkg')`).

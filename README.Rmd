@@ -10,16 +10,28 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
-)
+) 
 ```
 
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
 # drakepkg
 
-The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. 
+The goal of [`drakepkg`](https://github.com/tiernanmartin/drakepkg) is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. 
 
-This package is a work-in-progress that began with a request for guidance: [`drake` issue #471](https://github.com/ropensci/drake/issues/471)
+Why do this? Because the package system in R provides a widely-adopted method of structuring, documenting, testing, and sharing R code. While most R packages are general purpose, this approach applies the same framework to a specific workflow (or set of workflows). It increases the reproducibility of a complex workflow without requiring users to recreate the workflow's environment with a container image (although that approach is compatible with [`drakepkg`](https://github.com/tiernanmartin/drakepkg) - see [januz/drakepkg](https://github.com/januz/drakepkg)).
+
+The [`drakepkg`](https://github.com/tiernanmartin/drakepkg) package is experimental in nature and currently requires some inconvenient steps (see the [drake manual - 7.1.4 Workflows as R packages](https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages)); please use caution when applying this approach to your own work.
+
+## Installation
+
+You can install the released version of [`drakepkg`](https://github.com/tiernanmartin/drakepkg) from its Github [repository](https://github.com/tiernanmartin/drakepkg) with:
+
+``` {r install, eval=FALSE}
+devtools::install_packages("tiernanmartin/drakepkg")
+```
+
+## Usage
 
 The following table shows how each feature of a [`drake`](https://ropensci.github.io/drake/) workflow is made accessible within an R package: 
 
@@ -29,31 +41,27 @@ The following table shows how each feature of a [`drake`](https://ropensci.githu
 | targets                   | stored in the cache (`.drake/`)                            |
 | input files, output files | internal data (`inst/intdata/*`), external data (`inst/extdata/*`), images and documents (`inst/documents/*`)                           |
 
-## Installation
 
-You can install the released version of `drakepkg` from its Github [repository](https://github.com/tiernanmartin/drakepkg) with:
+The package comes with two example [`drake`](https://ropensci.github.io/drake/) plans, both of which are loosely based on the `main` example included in the [`drake`](https://ropensci.github.io/drake/) package:
 
-``` {r install, eval=FALSE}
-devtools::install_packages("tiernanmartin/drakepkg")
-```
+  1. An introductory plan: `drakepkg::get_example_plan_simple()`
+  2. A plan that involves downloading external data: `drakepkg::get_example_plan_external()`
 
-## Usage
+The first plan looks like this:
 
-The package comes with two example [`drake`](https://ropensci.github.io/drake/) plans that are loosely based on the [`main`](https://github.com/ropensci/drake/tree/master/inst/examples/main) example included in the [`drake`](https://ropensci.github.io/drake/) package. 
-
-The first plan is a simple one:
-
-```{r}
+```{r library, echo = FALSE, message=FALSE, warning=FALSE}
 library(drakepkg)
 
-get_example_plan_simple()
+```
 
+```{r simple-plan}
+get_example_plan_simple()
 ```
 
 
-Several commands used in the plan (e.g,`create_plot()`, `write_report_simple()`) are included as part of the `drakepkg` R package and so is the plan itself; the documentation for each of these functions can be accessed using R's `help()` function (for example, `help(get_example_plan_simple)`).
+Several commands used in the plan (e.g,`create_plot()`, `write_report_simple()`) are included as part of the [`drakepkg`](https://github.com/tiernanmartin/drakepkg) R package and so is the plan itself; the documentation for each of these functions can be accessed using R's `help()` function (for example, `help(get_example_plan_simple)`).
 
-You can reproduce the simple plan's workflow by performing the following steps:
+Once you have installed and loaded [`drakepkg`](https://github.com/tiernanmartin/drakepkg), you can reproduce the introductory plan's workflow by performing the following steps:
 
   1. Copy the package's directories and source code files into your working directory with the `copy_drakepkg_files()` function
   2. View the plan (`get_example_plan_simple()`) and then make it (`make(get_example_plan_simple())`)
@@ -82,7 +90,7 @@ make(get_example_plan_simple())
 ```
 
 
-```{r step4}
+```{r step3}
 # Step 3: examine the plan's targets
 
 readd(fit)
@@ -91,7 +99,7 @@ readd(hist)
 ```
 
 
-
+This example and others are available in the package vignette (`vignette('drakepkg')`).
 
 
 
