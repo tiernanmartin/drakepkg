@@ -37,9 +37,13 @@ get_example_plan_simple <- function(){
     ready_data = dplyr::mutate(raw_data, Species = forcats::fct_inorder(Species)),
     hist = create_plot(ready_data),
     fit = lm(Sepal.Width ~ Petal.Width + Species, ready_data),
-    report = write_report_simple(hist, fit)
+    report = write_html_report(hist,
+                                 fit,
+                                 knitr_in("documents/report-simple.Rmd"),
+                                 file_out("documents/report-simple.html"))
   )
 }
+
 
 #' @title An Example of a Drake Plan (External Data)
 #' @description An example of a \code{\link[drake]{drake_plan}} that includes data from external sources
@@ -81,6 +85,9 @@ get_example_plan_external <- function(){
     iris_combined = make_iris_combined(iris_int_raw, iris_ext_raw),
     hist = create_facet_plot(iris_combined),
     fit = lm(Sepal.Width ~ Petal.Width + Species + group, iris_combined),
-    report = write_report_external(hist, fit)
+    report = write_html_report(hist,
+                                   fit,
+                                   knitr_in("documents/report-external.Rmd"),
+                                   file_out("documents/report-external.html"))
   )
 }

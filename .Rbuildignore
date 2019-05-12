@@ -4,6 +4,5 @@
 ^\.Rproj\.user$
 ^\.drake$
 ^inst/extdata/R
-^documents
 ^extdata
 ^plans

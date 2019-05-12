@@ -26,3 +26,4 @@ Suggests:
     writexl
 URL: https://github.com/tiernanmartin/drakepkg
 BugReports: https://github.com/tiernanmartin/drakepkg/issues
+VignetteBuilder: knitr

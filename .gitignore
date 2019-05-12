@@ -5,8 +5,6 @@
 /extdata/
 /intdata/
 /documents/
-inst/documents/[a-z]*
-inst/documents/[0-9]*
-inst/extdata/[a-z]*
-inst/extdata/[0-9]*
+inst/extdata/**/[a-z]*.*
+inst/extdata/**/[0-9]*.*
 

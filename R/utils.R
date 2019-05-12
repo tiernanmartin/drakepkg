@@ -58,3 +58,4 @@ make_with_beep <- function(plan, .beep = TRUE, .beep_on_error = TRUE, ...){
 
 
 }
+

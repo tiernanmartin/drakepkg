@@ -1,0 +1,155 @@
+---
+title: "How to use this packaged `drake` workflow"
+author: "Tiernan Martin"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{drakepkg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+  knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.path = "man/figures/vignette-",
+  comment = "#>"
+  )
+  options(drake_make_menu = FALSE,
+  drake_clean_menu = FALSE)
+```
+  
+The goal of `drakepkg` is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. Users who are not yet familiar with [`drake`](https://ropensci.github.io/drake/) should review the package's [User Manual](https://ropenscilabs.github.io/drake-manual/) before continuing with this vignette.
+  
+  
+# Reproducing a Workflow from an R Package
+  
+  The following examples illustrate the way that [`drake`](https://ropensci.github.io/drake/) workflow's can be reproduced when they're included in an R package.
+  
+## Simple Plan
+  
+This example borrows the `main` example from the [`drake`](https://ropensci.github.io/drake/) package documentation and recreates it within an R package.
+  
+The plan is included in `drakepkg` as a function:
+  
+```{r simple-plan}
+  library(drakepkg) # devtools::install_packages("tiernanmartin/drakepkg")
+
+get_example_plan_simple()
+```
+
+Here are the steps needed to reproduce this plan:
+
+1. Create a new [RStudio Project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects) or navigate to an empty working directory (not _required_ but strongly recommended)
+2. Copy the package's directories and source code files into your working directory: `copy_drakepkg_files()`
+3. Make the plan: `make(get_example_plan_simple())`
+4. Access the plan's targets using `drake` functions like `readd()` or `loadd()`
+5. View the html documents produced by the workflow (see the `documents/` directory)
+
+The first step is optional but strongly recommended; it is generally accepted as a best practice that data analysis projects should be [self-contained](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/#self-contained-projects).  
+
+The second step is an important one. Most [`drake`](https://ropensci.github.io/drake/) plans interact with the user's file system at some point, typically to read inputs or write outputs. `drakepkg`'s `inst/` directory contains the files and directories that are needed to successfully make `get_example_plan_simple()`. The `copy_drakepkg_files()` function copies the following directories from `drakepkg` into the user's working directory:
+
+```
+.
+├── documents
+├── extdata
+└── intdata
+├── R
+│   └── make-iris-internal.R
+└── iris-internal.xlsx 
+```
+The third step is to make the plan:
+
+```{r simple-step3-noeval, eval=FALSE} 
+
+make(get_example_plan_simple())
+```
+
+```{r simple-step3-noecho, echo=FALSE} 
+# Switch to a temporary working directory 
+
+old_wd <- getwd()
+temp_wd <- tempdir()
+setwd(temp_wd)
+
+# Copy input files from drakepkg director into temp_wd
+
+iris_internal_xlsx_path_ext <- system.file("intdata", "iris-internal.xlsx", package = "drakepkg", mustWork = TRUE)
+
+iris_internal_xlsx_path_local <- file.path(temp_wd,"iris-internal.xlsx")
+
+report_simple_path_ext <- system.file("documents", "report-simple.Rmd", package = "drakepkg", mustWork = TRUE)
+
+report_simple_path_local <- file.path(temp_wd,"report-simple.Rmd")
+
+report_simple_path_html_local <- file.path(temp_wd,"report-simple.html")
+
+
+purrr::walk2(list(iris_internal_xlsx_path_ext, report_simple_path_ext),
+             list(iris_internal_xlsx_path_local, report_simple_path_local),
+             file.copy,
+             overwrite = TRUE)
+
+drake::clean(destroy = TRUE)
+
+make(
+  drake_plan(
+    raw_data = readxl::read_excel(iris_internal_xlsx_path_local),
+    ready_data = dplyr::mutate(raw_data, Species = forcats::fct_inorder(Species)),
+    hist = create_plot(ready_data),
+    fit = lm(Sepal.Width ~ Petal.Width + Species, ready_data),
+    report = write_html_report(hist,
+                                   fit,
+                                   knitr_in(report_simple_path_local),
+                                   file_out(report_simple_path_html_local))
+  )
+)
+
+# reset wd
+setwd(old_wd)
+
+```
+
+
+The final output of the plan above is the `report` target, but any of the targets
+can be accessed using [`drake`](https://ropensci.github.io/drake/) functions like
+`readd()` or `loadd()`.
+
+```{r simple-hist-noeval, eval=FALSE} 
+
+# retrieve a target from the drake cache and inspect it
+loadd(fit)
+summary(fit) 
+
+# inspect a target without storing it in the local environment
+readd(hist) 
+```
+
+```{r simple-hist-noecho, echo = FALSE, out.width='66%'}
+
+# Switch to a temporary working directory 
+setwd(temp_wd)
+
+# retrieve a target from the drake cache and inspect it
+loadd(fit)
+summary(fit) 
+
+# inspect a target without storing it in the local environment
+readd(hist) 
+
+# reset wd
+setwd(old_wd)
+```
+
+
+
+## Plan With External Data
+
+
+## Plan With Open Science Framework Compendium
+
+# Creating a Drake Workflow R Package

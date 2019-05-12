@@ -2,28 +2,21 @@
 #' @description Write the simple version of the report (.Rmd -> html)
 #' @param hist a plot object
 #' @param fit a linear model
+#' @param rmd_filepath the filepath of the .Rmd version of the report
+#' @param html_filepath the filepath of the .html version of the report
 #' @return a \code{tibble} object
 
+
 #' @rdname write_report
 #' @export
-write_report_simple <- function(hist, fit) {
+write_html_report <- function(hist, fit, rmd_filepath, html_filepath) {
 
 rmarkdown::render(
-      knitr_in("documents/report-simple.Rmd"),
-      output_file = file_out("documents/report-simple.html"),
-      output_dir = "documents",
-      quiet = TRUE
+      rmd_filepath,
+      output_file = html_filepath,
+      output_dir = dirname(html_filepath),
+      quiet = TRUE,
+      encoding="UTF-8"
     )
 }
 
-#' @rdname write_report
-#' @export
-write_report_external <- function(hist, fit) {
-
- report = rmarkdown::render(
-      knitr_in("documents/report-external.Rmd"),
-      output_file = file_out("documents/report-external.html"),
-      output_dir = "documents",
-      quiet = TRUE
-    )
-}

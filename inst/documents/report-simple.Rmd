@@ -1,0 +1,17 @@
+---
+title: "Example R Markdown drake file target" 
+output: html_document
+---
+
+Here is a preliminary model and exploratory visualization of the `iris` dataset:
+
+```{r content}
+library(drakepkg)
+loadd(fit)
+print(fit)
+readd(hist)
+```
+
+<hr>
+
+_Note: this report is part of the `drakepkg` package and its purpose is to illustrate the viability of organizing a `drake` workflow within an R package._
