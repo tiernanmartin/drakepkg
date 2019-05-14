@@ -4,7 +4,10 @@
 \alias{make_iris_external}
 \title{Make An Iris-like Dataset}
 \usage{
-make_iris_external()
+make_iris_external(path)
+}
+\arguments{
+\item{path}{the file path where this file should be saved}
 }
 \value{
 a \code{tibble} object

@@ -81,7 +81,7 @@ get_example_plan_simple <- function(){
 get_example_plan_external <- function(){
   drake_plan(
     iris_int_raw = readxl::read_excel(file_in("intdata/iris-internal.xlsx")),
-    iris_ext_raw = make_iris_external(),
+    iris_ext_raw = make_iris_external(file_out("extdata/iris-external.xlsx")),
     iris_combined = make_iris_combined(iris_int_raw, iris_ext_raw),
     hist = create_facet_plot(iris_combined),
     fit = lm(Sepal.Width ~ Petal.Width + Species + group, iris_combined),

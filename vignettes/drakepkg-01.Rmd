@@ -33,7 +33,7 @@ This example borrows the `main` example from the [`drake`](https://ropensci.gith
 The plan is included in `drakepkg` as a function:
   
 ```{r simple-plan}
-  library(drakepkg) # devtools::install_packages("tiernanmartin/drakepkg")
+library(drakepkg) # devtools::install_packages("tiernanmartin/drakepkg")
 
 get_example_plan_simple()
 ```
@@ -50,110 +50,92 @@ The first step is optional but strongly recommended; it is generally accepted as
 
 The second step is an important one. Most [`drake`](https://ropensci.github.io/drake/) plans interact with the user's file system at some point, typically to read inputs or write outputs. `drakepkg`'s `inst/` directory contains the files and directories that are needed to successfully make `get_example_plan_simple()`. The `copy_drakepkg_files()` function copies the following directories from `drakepkg` into the user's working directory:
 
-```{r simple-step2-noeval, eval=FALSE}
+```{r simple-step2-noeval}
 copy_drakepkg_files()
+```
 
+```
+.
+├── documents
+├── extdata 
+└── intdata
+    ├── R
+    │   └── make-iris-internal.R
+    └── iris-internal.xlsx 
+```
+The third step is to make the plan:
+
+```{r simple-step3-noecho, echo=FALSE}
+clean(destroy = TRUE) 
 ```
 
 
+```{r simple-step3}  
+make(get_example_plan_simple())
+```
+
+The worflow's dependency graph can be displayed using `drake::vis_drake_graph()`:
+
+```{r simple-vis, out.width = "100%"}
+get_example_plan_simple() %>% 
+  drake_config() %>% 
+  vis_drake_graph()
+```
+
+The final output of the plan above is the `report` target but any of the targets
+can be accessed using [`drake`](https://ropensci.github.io/drake/) functions like
+`loadd()` or `readd()`.
+
+```{r simple-hist-noeval, out.width="80%"} 
+# retrieve a target from the drake cache and inspect it
+loadd(fit)
+summary(fit) 
+
+# inspect a target without storing it in the local environment
+readd(hist) 
+```
+
+
+# Plan With External Data
+
+The second example builds on the first by introducing external data. The [`drake`](https://ropensci.github.io/drake/) cache automatically stores a copy of each target in a plan, but when the plan accessess data from 
+an external source it's a good idea to store a local copy of that data in addition to the cached copy.
+
+The following plan downloads the `iris` dataset from a github repository and stores it in the `extdata` directory in the user's working directory, like so:
 
 ```
 .
 ├── documents
 ├── extdata
+|   └── iris-external.xlsx <-- file downloaded in the plan is stored here
 └── intdata
-├── R
-│   └── make-iris-internal.R
-└── iris-internal.xlsx 
+    ├── R
+    │   └── make-iris-internal.R
+    └── iris-internal.xlsx 
 ```
-The third step is to make the plan:
+Here is the plan:
 
-```{r simple-step3-noeval, eval=FALSE} 
-
-make(get_example_plan_simple())
-```
-
-```{r simple-step3-noecho, echo=FALSE} 
-# Switch to a temporary working directory 
-
-old_wd <- getwd()
-temp_wd <- tempdir()
-setwd(temp_wd)
-
-# Copy input files from drakepkg director into temp_wd
-
-iris_internal_xlsx_path_ext <- system.file("intdata", "iris-internal.xlsx", package = "drakepkg", mustWork = TRUE)
-
-iris_internal_xlsx_path_local <- file.path(temp_wd,"iris-internal.xlsx")
-
-report_simple_path_ext <- system.file("documents", "report-simple.Rmd", package = "drakepkg", mustWork = TRUE)
-
-report_simple_path_local <- file.path(temp_wd,"report-simple.Rmd")
-
-report_simple_path_html_local <- file.path(temp_wd,"report-simple.html")
-
-
-purrr::walk2(list(iris_internal_xlsx_path_ext, report_simple_path_ext),
-             list(iris_internal_xlsx_path_local, report_simple_path_local),
-             file.copy,
-             overwrite = TRUE)
-
-drake::clean(destroy = TRUE)
-
-make(
-  drake_plan(
-    raw_data = readxl::read_excel(iris_internal_xlsx_path_local),
-    ready_data = dplyr::mutate(raw_data, Species = forcats::fct_inorder(Species)),
-    hist = create_plot(ready_data),
-    fit = lm(Sepal.Width ~ Petal.Width + Species, ready_data),
-    report = write_html_report(hist,
-                                   fit,
-                                   knitr_in(report_simple_path_local),
-                                   file_out(report_simple_path_html_local))
-  )
-)
-
-# reset wd
-setwd(old_wd)
-
+```{r external-clean, echo=FALSE}
+clean(destroy = TRUE) 
 ```
 
-
-The final output of the plan above is the `report` target, but any of the targets
-can be accessed using [`drake`](https://ropensci.github.io/drake/) functions like
-`readd()` or `loadd()`.
-
-```{r simple-hist-noeval, eval=FALSE} 
-
-# retrieve a target from the drake cache and inspect it
-loadd(fit)
-summary(fit) 
-
-# inspect a target without storing it in the local environment
-readd(hist) 
+```{r external-make} 
+make(get_example_plan_external())
 ```
 
-```{r simple-hist-noecho, echo = FALSE, out.width='66%'}
-
-# Switch to a temporary working directory 
-setwd(temp_wd)
-
-# retrieve a target from the drake cache and inspect it
-loadd(fit)
-summary(fit) 
-
-# inspect a target without storing it in the local environment
-readd(hist) 
-
-# reset wd
-setwd(old_wd)
+```{r external-vis, out.width = "100%"}
+get_example_plan_external() %>% 
+  drake_config() %>% 
+  vis_drake_graph()
 ```
 
+The visualization below shows that the new "`iris`" data is actually just random 
+numbers:
 
+```{r external-hist, out.width = "80%"} 
+readd(hist)
+```
 
-# Plan With External Data
-
-_(work in progress)_
 
 # Plan With Open Science Framework Compendium
 _(work in progress)_
