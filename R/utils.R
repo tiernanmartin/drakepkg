@@ -59,3 +59,10 @@ make_with_beep <- function(plan, .beep = TRUE, .beep_on_error = TRUE, ...){
 
 }
 
+
+#' @keywords internal
+#' @export
+pull_highest_dir <- function(x){
+  unlist(strsplit(x, .Platform$file.sep))[1]
+}
+

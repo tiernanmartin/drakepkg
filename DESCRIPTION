@@ -20,7 +20,8 @@ Imports:
     purrr,
     readxl,
     forcats,
-    R.utils
+    R.utils,
+    osfr (>= 0.2.4)
 Suggests:
     testthat,
     writexl
