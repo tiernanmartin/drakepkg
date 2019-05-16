@@ -16,7 +16,8 @@ vignette: >
   knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "man/figures/vignette-",
-  comment = "#>"
+  comment = "#>",
+  dpi = 120
   )
   options(drake_make_menu = FALSE,
   drake_clean_menu = FALSE)
@@ -86,7 +87,7 @@ The final output of the plan above is the `report` target but any of the targets
 can be accessed using [`drake`](https://ropensci.github.io/drake/) functions like
 `loadd()` or `readd()`.
 
-```{r simple-hist-noeval, out.width="80%"} 
+```{r simple-hist, dpi = 300, fig.asp = .66, out.width = "100%"} 
 # retrieve a target from the drake cache and inspect it
 loadd(fit)
 summary(fit) 
@@ -132,7 +133,7 @@ get_example_plan_external() %>%
 The visualization below shows that the new "`iris`" data is actually just random 
 numbers:
 
-```{r external-hist, out.width = "80%"} 
+```{r external-hist, dpi = 300, fig.asp = .66, out.width = "100%"} 
 readd(hist)
 ```
 

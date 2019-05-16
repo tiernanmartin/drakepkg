@@ -2,7 +2,8 @@
   knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "man/figures/vignette-",
-  comment = "#>"
+  comment = "#>",
+  dpi = 120
   )
   options(drake_make_menu = FALSE,
   drake_clean_menu = FALSE)
@@ -26,7 +27,7 @@ get_example_plan_simple() %>%
   drake_config() %>% 
   vis_drake_graph()
 
-## ----simple-hist-noeval, out.width="80%"---------------------------------
+## ----simple-hist, dpi = 300, fig.asp = .66, out.width = "100%"-----------
 # retrieve a target from the drake cache and inspect it
 loadd(fit)
 summary(fit) 
@@ -45,6 +46,6 @@ get_example_plan_external() %>%
   drake_config() %>% 
   vis_drake_graph()
 
-## ----external-hist, out.width = "80%"------------------------------------
+## ----external-hist, dpi = 300, fig.asp = .66, out.width = "100%"---------
 readd(hist)
 

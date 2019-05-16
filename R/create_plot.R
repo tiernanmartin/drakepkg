@@ -15,7 +15,9 @@ create_plot <- function(data) {
 
   hist_plot <- ggplot2::ggplot(data, ggplot2::aes(x = Petal.Width, fill = Species)) +
     ggplot2::geom_histogram(binwidth = 0.25) +
-    ggplot2::theme_gray(20)
+    ggplot2::theme_gray(20) +
+    ggplot2::theme(line = ggplot2::element_line(size = ggplot2::rel(.5)),
+                   text = ggplot2::element_text(size = 6))
 
   return(hist_plot)
 }
@@ -27,7 +29,9 @@ create_facet_plot <- function(data) {
   hist_plot <- ggplot2::ggplot(data, ggplot2::aes(x = Petal.Width, fill = Species)) +
     ggplot2::geom_histogram(binwidth = 0.25) +
     ggplot2::facet_wrap(~ group, ncol = 1) +
-    ggplot2::theme_gray(20)
+    ggplot2::theme_gray(20) +
+    ggplot2::theme(line = ggplot2::element_line(size = ggplot2::rel(.5)),
+                   text = ggplot2::element_text(size = 6))
 
   return(hist_plot)
 }
