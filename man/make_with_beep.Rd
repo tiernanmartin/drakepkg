@@ -4,7 +4,8 @@
 \alias{make_with_beep}
 \title{Make a Beeping Plan!}
 \usage{
-make_with_beep(plan, .beep = TRUE, .beep_on_error = TRUE, ...)
+make_with_beep(plan, .beep = TRUE, .beep_on_error = TRUE,
+  lock_envir = FALSE, ...)
 }
 \arguments{
 \item{plan}{drake plan}
@@ -13,6 +14,8 @@ make_with_beep(plan, .beep = TRUE, .beep_on_error = TRUE, ...)
 
 \item{.beep_on_error}{logical (default = TRUE), whether to play the "facebook" sound if the plan returns an error}
 
+\item{lock_envir}{default: \code{FALSE}, whether to lock the user's environment (see \code{help(\link[drake]{make})})}
+
 \item{...}{list, a list of parameters to pass to \code{\link[drake]{make}()}}
 }
 \value{
@@ -20,4 +23,9 @@ nothing
 }
 \description{
 Add a sound effect to alert the user when a \code{drake} plan has either completed or returned an error.
+}
+\note{
+\code{lock_envir = FALSE} is necessary if \codde{make_with_beep()} is used on a packaged \code{plan}
+because \code{\link[drake]{expose_imports}()} needs to be run prior to making the plan
+(see the \code{drake} manual for details: \url{https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages})
 }

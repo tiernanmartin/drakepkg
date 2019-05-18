@@ -13,14 +13,18 @@ NULL
 #' @param plan drake plan
 #' @param .beep logical (default = TRUE), whether to play the "ping" sound after the plan is made
 #' @param .beep_on_error logical (default = TRUE), whether to play the "facebook" sound if the plan returns an error
+#' @param lock_envir default: \code{FALSE}, whether to lock the user's environment (see \code{help(\link[drake]{make})})
 #' @param ... list, a list of parameters to pass to \code{\link[drake]{make}()}
 #' @return nothing
+#' @note \code{lock_envir = FALSE} is necessary if \codde{make_with_beep()} is used on a packaged \code{plan}
+#'   because \code{\link[drake]{expose_imports}()} needs to be run prior to making the plan
+#'   (see the \code{drake} manual for details: \url{https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages})
 #' @export
-make_with_beep <- function(plan, .beep = TRUE, .beep_on_error = TRUE, ...){
+make_with_beep <- function(plan, .beep = TRUE, .beep_on_error = TRUE, lock_envir = FALSE, ...){
 
   params <- list(...)
 
-  make_plan_expr <- function(){ do.call(make, c(list(plan = plan), params))}
+  make_plan_expr <- function(){ do.call(make, c(list(plan = plan, lock_envir = lock_envir), params))}
 
   # beep on either success or error
   if(.beep & .beep_on_error){
