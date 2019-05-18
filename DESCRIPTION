@@ -21,7 +21,8 @@ Imports:
     readxl,
     forcats,
     R.utils,
-    osfr (>= 0.2.4)
+    osfr (>= 0.2.4),
+    glue
 Suggests:
     testthat,
     writexl
