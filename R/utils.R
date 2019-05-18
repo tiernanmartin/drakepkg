@@ -5,17 +5,8 @@
 NULL
 
 
-#' Pipe operator
-#'
-#' See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
+
+# Exported ----------------------------------------------------------------
 
 #' @title Make a Beeping Plan!
 #' @description Add a sound effect to alert the user when a \code{drake} plan has either completed or returned an error.
@@ -58,6 +49,28 @@ make_with_beep <- function(plan, .beep = TRUE, .beep_on_error = TRUE, ...){
 
 
 }
+
+#' @title Get the a File's Last Modification Datetime
+#' @param path filepath
+#' @export
+get_modified_time <- function(path){glue::glue("'{path}' modified at: {file.mtime(path)}.")}
+
+
+
+# Internal ----------------------------------------------------------------
+
+#' Pipe operator
+#'
+#' See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
+#'
+#' @name %>%
+#' @rdname pipe
+#' @keywords internal
+#' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
+NULL
+
 
 
 #' @keywords internal
