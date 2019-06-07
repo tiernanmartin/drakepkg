@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 
 # drakepkg
 
+**Cascadia R Conference 2019 Update:** the slides from Tiernan Martin's talk can be downloaded here: [drakepkg-slides-cascadiarconf2019.pdf](https://github.com/tiernanmartin/drakepkg/raw/master/drakepkg-slides-cascadiarconf2019.pdf)
+
+<hr>
+
 The goal of [`drakepkg`](https://github.com/tiernanmartin/drakepkg) is to demonstrate how a [`drake`](https://ropensci.github.io/drake/) workflow can be organized as an R package. 
 
 Why do this? Because the package system in R provides a widely-adopted method of structuring, documenting, testing, and sharing R code. While most R packages are general purpose, this approach applies the same framework to a specific workflow (or set of workflows). It increases the reproducibility of a complex workflow without requiring users to recreate the workflow's environment with a container image (although that approach is compatible with [`drakepkg`](https://github.com/tiernanmartin/drakepkg) - see [januz/drakepkg](https://github.com/januz/drakepkg)).

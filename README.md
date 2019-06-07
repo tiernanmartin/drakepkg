@@ -7,6 +7,12 @@ public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus
 
 # drakepkg
 
+**Cascadia R Conference 2019 Update:** the slides from Tiernan Martin’s
+talk can be downloaded here:
+[drakepkg-slides-cascadiarconf2019.pdf](https://github.com/tiernanmartin/drakepkg/raw/master/drakepkg-slides-cascadiarconf2019.pdf)
+
+<hr>
+
 The goal of [`drakepkg`](https://github.com/tiernanmartin/drakepkg) is
 to demonstrate how a [`drake`](https://ropensci.github.io/drake/)
 workflow can be organized as an R package.
@@ -120,11 +126,7 @@ get_example_plan_simple()
 # Step 2B: make the example plan
 
 make(get_example_plan_simple())
-#> target raw_data
-#> target ready_data
-#> target fit
-#> target hist
-#> target report
+#> All targets are already up to date.
 ```
 
 ``` r
