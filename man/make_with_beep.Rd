@@ -25,7 +25,7 @@ nothing
 Add a sound effect to alert the user when a \code{drake} plan has either completed or returned an error.
 }
 \note{
-\code{lock_envir = FALSE} is necessary if \codde{make_with_beep()} is used on a packaged \code{plan}
+\code{lock_envir = FALSE} is necessary if \code{make_with_beep()} is used on a packaged \code{plan}
 because \code{\link[drake]{expose_imports}()} needs to be run prior to making the plan
 (see the \code{drake} manual for details: \url{https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages})
 }
