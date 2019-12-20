@@ -40,7 +40,7 @@ You can install the released version of
 [repository](https://github.com/tiernanmartin/drakepkg) with:
 
 ``` r
-devtools::install_packages("tiernanmartin/drakepkg")
+devtools::install_github("tiernanmartin/drakepkg")
 ```
 
 ## Usage
@@ -68,6 +68,7 @@ loosely based on the `main` example included in the
 The first plan looks like this:
 
 ``` r
+library(drake)
 get_example_plan_simple()
 #> # A tibble: 5 x 2
 #>   target     command                                                       
