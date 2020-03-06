@@ -29,8 +29,8 @@ that approach is compatible with
 
 The [`drakepkg`](https://github.com/tiernanmartin/drakepkg) package is
 experimental in nature and currently requires some inconvenient steps
-(see the [drake manual - 7.1.4 Workflows as R
-packages](https://ropenscilabs.github.io/drake-manual/best-practices.html#workflows-as-r-packages));
+(see the [drake manual - 7.4 Workflows as R
+packages](https://books.ropensci.org/drake/projects.html#workflows-as-r-packages));
 please use caution when applying this approach to your own work.
 
 ## Installation
